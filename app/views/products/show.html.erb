@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>商品名:</strong>
+  <%= @product.name %>
+</p>
+
+<p>
+  <strong>価格:</strong>
+  <%= @product.price %>
+</p>
+
+<p>
+  <strong>在庫数:</strong>
+  <%= @product.stock %>
+</p>
+
+<p>
+  <strong>商品説明:</strong>
+  <%= @product.note %>
+</p>
+
+<p>
+  <strong>商品画像</strong>
+  <%= @product.image %>
+</p>
+
+<%= form_tag(action: :pay, method: :post) do %>
+  <script type="text/javascript"
+    src="https://checkout.pay.jp"
+    class="payjp-button"
+    data-key="pk_test_0383a1b8f91e8a6e3ea0e2a9">
+  </script>
+<% end %>
+<%= link_to '商品一覧に戻る', products_path %>

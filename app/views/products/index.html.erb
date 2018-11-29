@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>商品一覧</h1>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>商品名</th>
+      <th>価格</th>
+      <th>在庫数</th>
+      <th>商品説明</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @products.each do |product| %>
+      <tr>
+        <td><%= product.name %></td>
+        <td><%= product.price %></td>
+        <td><%= product.stock %></td>
+        <td><%= product.note %></td>
+        <td><%= link_to '商品を見る', product %></td>
+        <td><%= link_to '編集', edit_product_path(product) %></td>
+        <td><%= link_to '削除', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to '商品を追加する', new_product_path %>
