@@ -21,8 +21,8 @@
 </p>
 
 <p>
-  <strong>商品画像</strong>
-  <%= @product.image %>
+  <strong>商品画像</strong><br />
+  <img src=/<%= @product.image %> width="320">
 </p>
 
 <%= form_tag(action: :pay, method: :post) do %>

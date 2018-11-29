@@ -26,13 +26,17 @@ class ProductsController < ApplicationController
   # POST /products.json
   def create
     @product = Product.new(product_params)
-    binding.pry
+    image = product_params[:imageobject]
+    image_name = image.original_filename
+    @product.image= image.original_filename
+    result = uploadimg(image,image_name)
 
     respond_to do |format|
-      if @product.save
+      if result=="success" && @product.save
         format.html { redirect_to @product, notice: '商品が登録されました。' }
         format.json { render :show, status: :created, location: @product }
       else
+        deleteimg(image_name)
         format.html { render :new }
         format.json { render json: @product.errors, status: :unprocessable_entity }
       end
@@ -44,7 +48,7 @@ class ProductsController < ApplicationController
   def update
     respond_to do |format|
       if @product.update(product_params)
-        format.html { redirect_to @product, notice: 'Product was successfully updated.' }
+        format.html { redirect_to @product, notice: '商品情報を更新しました。' }
         format.json { render :show, status: :ok, location: @product }
       else
         format.html { render :edit }
@@ -58,7 +62,7 @@ class ProductsController < ApplicationController
   def destroy
     @product.destroy
     respond_to do |format|
-      format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }
+      format.html { redirect_to products_url, notice: '商品を削除しました。' }
       format.json { head :no_content }
     end
   end
@@ -70,7 +74,7 @@ class ProductsController < ApplicationController
       :card => params['payjp-token'],
       :currency => 'jpy',
     )
-    redirect_to @product, notice: 'ありがとうございました。'
+    redirect_to products_url, notice: 'ありがとうございました。'
   end
 
   private
@@ -82,5 +86,23 @@ class ProductsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def product_params
       params.require(:product).permit(:name, :price, :stock, :note, :imageobject)
+    end
+
+    def uploadimg(img_object,image_name)
+      ext = image_name[image_name.rindex('.') + 1, 4].downcase
+      perms = ['.jpg', '.jpeg', '.gif', '.png']
+      if !perms.include?(File.extname(image_name).downcase)
+        result = 'アップロードできるのは画像ファイルのみです。'
+      elsif img_object.size > 4.megabyte
+        result = 'ファイルサイズは4MBまでです。'
+      else
+        File.open("public/#{image_name.toutf8}", 'wb') { |f| f.write(img_object.read) }
+        result = "success"
+      end
+      return result
+    end
+
+    def deleteimg(image_name)
+      File.unlink "public/"+image_name.toutf8
     end
 end
