@@ -48,7 +48,7 @@ class ProductsController < ApplicationController
   def update
     respond_to do |format|
       if @product.update(product_params)
-        format.html { redirect_to @product, notice: '商品情報を更新しました。' }
+        format.html { redirect_to products_url, notice: '商品情報を更新しました。' }
         format.json { render :show, status: :ok, location: @product }
       else
         format.html { render :edit }
@@ -74,6 +74,8 @@ class ProductsController < ApplicationController
       :card => params['payjp-token'],
       :currency => 'jpy',
     )
+    @product[:stock] = @product[:stock] - 1
+    @product.save
     redirect_to products_url, notice: 'ありがとうございました。'
   end
 
