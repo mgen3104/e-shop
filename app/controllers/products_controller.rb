@@ -5,7 +5,7 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    @products = Product.all
+    @products = Product.order("updated_at DESC")
   end
 
   # GET /products/1
@@ -47,7 +47,7 @@ class ProductsController < ApplicationController
   # PATCH/PUT /products/1.json
   def update
     respond_to do |format|
-      if @product.update(product_params)
+      if @product.update(edit_params)
         format.html { redirect_to products_url, notice: '商品情報を更新しました。' }
         format.json { render :show, status: :ok, location: @product }
       else
@@ -86,8 +86,13 @@ class ProductsController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def product_params
+
+    def edit_params
       params.require(:product).permit(:name, :price, :stock, :note, :imageobject)
+    end
+
+    def product_params
+      params.permit(:name, :price, :stock, :note, :imageobject)
     end
 
     def uploadimg(img_object,image_name)
