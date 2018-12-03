@@ -34,7 +34,7 @@ class ProductsController < ApplicationController
     respond_to do |format|
       if result=="success" && @product.save
         format.html { redirect_to products_url, notice: '商品が登録されました。' }
-        format.json { render :show, status: :created, location: @product }
+        format.js
       else
         deleteimg(image_name)
         format.html { render :new }
