@@ -1,3 +1,34 @@
-$("#like-button-zone_<%= @receiving_user.id %>").html("<%= j(render partial: 'form2', locals: { user: @receiving_user }) %>");
+// ERBタグを用いることでコントローラにて定義した@receiving_userの値を取得できます
+// また同様にERBタグを用いて部分テンプレートも適用できます(jを用いてエスケープ処理を行う必要あり)
+$("#products-zone").html(`<div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+              <a href="/products/<%= product.id %>"><img src=/<%= product.image %> class="img-thumbnail"></a>
+              <div class="card-body">
+                <p class="card-text"><%= product.name %></p>
+                <p class="card-text"><%= product.price %>円</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <%= link_to "詳細", product, class: 'btn btn-sm btn-outline-secondary' %>
+                    <%= link_to "編集", edit_product_path(product), class: 'btn btn-sm btn-outline-secondary' %>
+                    <%= link_to "削除", product, method: :delete, data: { confirm: '削除しますか？' }, class: 'btn btn-sm btn-outline-secondary' %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>`);
+console.log(111)
 // いいね残高をコントローラにて定義した@sending_userを用いて表示します
-$(".like_balance").html("<%= @sending_user.like_balance %>")
+// $(".col-md-4").html("<div class="card mb-4 shadow-sm">
+//               <a href="/products/<%= product.id %>"><img src=/<%= product.image %> class="img-thumbnail"></a>
+//               <div class="card-body">
+//                 <p class="card-text"><%= product.name %></p>
+//                 <p class="card-text"><%= product.price %>円</p>
+//                 <div class="d-flex justify-content-between align-items-center">
+//                   <div class="btn-group">
+//                     <%= link_to "詳細", product, class: 'btn btn-sm btn-outline-secondary' %>
+//                     <%= link_to "編集", edit_product_path(product), class: 'btn btn-sm btn-outline-secondary' %>
+//                     <%= link_to "削除", product, method: :delete, data: { confirm: '削除しますか？' }, class: 'btn btn-sm btn-outline-secondary' %>
+//                   </div>
+//                 </div>
+//               </div>
+//             </div>")

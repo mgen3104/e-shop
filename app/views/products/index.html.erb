@@ -34,9 +34,9 @@
 
   <div class="album py-5 bg-light">
     <div class="container">
-      <div class="row">
+      <div class="row" id="products-zone">
         <% @products.each do |product| %>
-          <div class="col-md-4">
+          <div class="col-md-4" id="product-<%= product.id %>">
             <div class="card mb-4 shadow-sm">
               <a href="/products/<%= product.id %>"><img src=/<%= product.image %> class="img-thumbnail"></a>
               <div class="card-body">
@@ -46,7 +46,7 @@
                   <div class="btn-group">
                     <%= link_to "詳細", product, class: 'btn btn-sm btn-outline-secondary' %>
                     <%= link_to "編集", edit_product_path(product), class: 'btn btn-sm btn-outline-secondary' %>
-                    <%= link_to "削除", product, method: :delete, data: { confirm: '削除しますか？' }, class: 'btn btn-sm btn-outline-secondary' %>
+                    <%= link_to "削除", product_path(product), method: :delete, class: 'btn btn-sm btn-outline-secondary', remote: true %>
                   </div>
                 </div>
               </div>

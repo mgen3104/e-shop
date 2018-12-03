@@ -1,0 +1,7 @@
+$(function() {
+  var deleteConfirm = confirm("削除しますか?")
+  if(deleteConfirm == true) {
+    $("#product-<%= @product.id %>").remove()
+  }
+  else {return false;}
+})
